@@ -26,7 +26,7 @@ class SqliteApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Cat Application',
+      title: 'Application for cats',
       initialRoute: 'home',
       routes: {'home': (context) => HomePageWidget(firstCamera: firstCamera)},
       theme: ThemeData.light().copyWith(

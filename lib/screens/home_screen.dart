@@ -20,24 +20,22 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final textControllerDescription = TextEditingController();
-  final textControllerType = TextEditingController();
-  final textControllerSize = TextEditingController();
-  int? planetID;
+  final textControllerRace = TextEditingController();
+  final textControllerFood = TextEditingController();
+  int? catID;
   final textControllerName = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
-        title: const Text("Add a new Galaxy"),
+        title: const Text("Add a new Cat"),
         titleTextStyle: TextStyle(fontStyle: FontStyle.italic, fontSize: 20),
         backgroundColor: Color.fromARGB(255, 17, 95, 241),
         elevation: 0,
       ),
       body: Container(
-        padding: const EdgeInsets.all(20.0),
+        padding: const EdgeInsets.all(25.0),
         child: ListView(
           scrollDirection: Axis.vertical,
           shrinkWrap: true,
@@ -45,32 +43,24 @@ class _HomeScreenState extends State<HomeScreen> {
             TextFormField(
               controller: textControllerName,
               decoration: InputDecoration(
-                  icon: Icon(Icons.blur_on_outlined),
-                  labelText: "Name of the Galaxy."),
+                  icon: Icon(Icons.create_outlined),
+                  labelText: "Name of the Cat "),
             ),
             TextFormField(
-              controller: textControllerDescription,
+              controller: textControllerRace,
               decoration: InputDecoration(
-                  icon: Icon(Icons.info_outline),
-                  labelText: "Description's Galaxy"),
+                  icon: Icon(Icons.pets_outlined), labelText: "Race."),
             ),
             TextFormField(
-              controller: textControllerType,
+              controller: textControllerFood,
               decoration: InputDecoration(
-                  icon: Icon(Icons.category_outlined),
-                  labelText: "Type of Galaxy."),
-            ),
-            TextFormField(
-              controller: textControllerSize,
-              decoration: InputDecoration(
-                  icon: Icon(Icons.open_in_full_outlined),
-                  labelText: "Size of the Galaxy"),
+                  icon: Icon(Icons.fastfood_outlined), labelText: "Food."),
             ),
             Center(
-              child: (FutureBuilder<List<Planet>>(
-                  future: DatabaseHelper.instance.getPlanets(),
+              child: (FutureBuilder<List<Cat>>(
+                  future: DatabaseHelper.instance.getCats(),
                   builder: (BuildContext context,
-                      AsyncSnapshot<List<Planet>> snapshot) {
+                      AsyncSnapshot<List<Cat>> snapshot) {
                     if (!snapshot.hasData) {
                       return Center(
                         child: Container(
@@ -82,30 +72,29 @@ class _HomeScreenState extends State<HomeScreen> {
                       return snapshot.data!.isEmpty
                           ? Center(
                               child: Container(
-                                child: const Text("No Galaxies added yet!",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20)),
-                                padding: const EdgeInsets.all(20),
-                              ),
+                                  child: const Text("No Cats",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 20)),
+                                  padding: const EdgeInsets.only(top: 20.0)),
                             )
                           : ListView(
                               scrollDirection: Axis.vertical,
                               shrinkWrap: true,
-                              children: snapshot.data!.map((planet) {
+                              children: snapshot.data!.map((cat) {
                                 return Center(
                                     child: ListTile(
                                   title: Row(
                                     children: [
                                       Container(
-                                        child: Image.file(File(planet.Image)),
+                                        child: Image.file(File(cat.Image)),
                                         height: 50,
                                         width: 50,
                                       ),
                                       Container(
                                         child: Text(
-                                            'Name:${planet.Name}, Description:${planet.Description}, Type:${planet.Type}, Size:${planet.Size}'),
-                                        width: 150,
+                                            'Name:${cat.Name}, Race:${cat.Race}, Food:${cat.Food}'),
+                                        width: 160,
                                       )
                                     ],
                                   ),
@@ -117,18 +106,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 camera: widget.firstCamera,
                                               ));
                                       Navigator.push(context, route);
-                                      textControllerDescription.text =
-                                          planet.Description;
-                                      textControllerType.text = planet.Type;
-                                      textControllerSize.text = planet.Size;
-                                      planetID = planet.id;
-                                      textControllerName.text = planet.Name;
+                                      textControllerRace.text = cat.Race;
+                                      textControllerFood.text = cat.Food;
+                                      catID = cat.id;
+                                      textControllerName.text = cat.Name;
                                     });
                                   },
                                   onLongPress: () {
                                     setState(() {
-                                      DatabaseHelper.instance
-                                          .delete(planet.id!);
+                                      DatabaseHelper.instance.delete(cat.id!);
                                     });
                                   },
                                 ));
@@ -141,31 +127,29 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Color.fromARGB(255, 17, 95, 241),
-        child: const Icon(Icons.save_alt_outlined),
+        child: const Icon(Icons.check),
         onPressed: () async {
-          if (planetID != null) {
-            DatabaseHelper.instance.update(Planet(
-              id: planetID,
-              Description: textControllerDescription.text,
-              Type: textControllerType.text,
-              Size: textControllerSize.text,
+          if (catID != null) {
+            DatabaseHelper.instance.update(Cat(
+              id: catID,
+              Race: textControllerRace.text,
+              Food: textControllerFood.text,
               Image: widget.ImagePhath,
               Name: textControllerName.text,
             ));
           } else {
-            DatabaseHelper.instance.add(Planet(
-              Description: textControllerDescription.text,
-              Type: textControllerType.text,
-              Size: textControllerSize.text,
+            DatabaseHelper.instance.add(Cat(
+              Race: textControllerRace.text,
+              Food: textControllerFood.text,
               Image: widget.ImagePhath,
               Name: textControllerName.text,
             ));
           }
 
           setState(() {
-            textControllerDescription.clear();
-            textControllerType.clear();
-            textControllerSize.clear();
+            textControllerName.clear();
+            textControllerRace.clear();
+            textControllerFood.clear();
           });
         },
       ),

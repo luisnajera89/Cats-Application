@@ -6,21 +6,19 @@ import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 
 class DetailsScreenWidget extends StatefulWidget {
-  final String Description;
-  final String Type;
-  final String Size;
-  final String Image;
   final String Name;
+  final String Race;
+  final String Image;
+  final String Food;
   final CameraDescription firstCamera;
 
   const DetailsScreenWidget(
       {Key? key,
       required this.firstCamera,
-      required this.Description,
-      required this.Type,
-      required this.Size,
+      required this.Name,
+      required this.Race,
       required this.Image,
-      required this.Name})
+      required this.Food})
       : super(key: key);
 
   @override
@@ -39,7 +37,7 @@ class _DetailsScreenWidgetState extends State<DetailsScreenWidget> {
           onTap: () => FocusScope.of(context).unfocus(),
           child: Column(
             mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Stack(
@@ -73,18 +71,16 @@ class _DetailsScreenWidgetState extends State<DetailsScreenWidget> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       FlutterFlowIconButton(
+                        borderColor: Colors.transparent,
                         borderRadius: 30,
                         borderWidth: 1,
                         buttonSize: 60,
                         icon: Icon(
                           Icons.arrow_back_outlined,
-                          color: Color.fromARGB(255, 10, 0, 0),
+                          color: Color.fromARGB(255, 0, 0, 0),
                           size: 30,
                         ),
                         onPressed: () async {
-                          // Back
-
-                          //context.pushNamed('HomePage');
                           Navigator.of(context).push(
                             MaterialPageRoute(
                                 builder: (context) => HomePageWidget(
@@ -127,65 +123,50 @@ class _DetailsScreenWidgetState extends State<DetailsScreenWidget> {
                 ),
               ),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                padding: EdgeInsetsDirectional.fromSTEB(30, 15, 0, 0),
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(30, 0, 0, 0),
-                        child: Text('Galaxys Type')),
+                        padding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
+                        child: Text(
+                          'Race: ',
+                          style: new TextStyle(
+                              fontFamily: "Roboto",
+                              fontSize: 20.0,
+                              fontStyle: FontStyle.normal),
+                        )),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
+                      padding: EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
                       child: Text(
-                        widget.Type,
-                        style: FlutterFlowTheme.of(context).bodyText1.override(
-                              fontFamily: 'Roboto',
-                              fontWeight: FontWeight.bold,
-                            ),
+                        widget.Race,
+                        style: new TextStyle(
+                            fontFamily: "Roboto",
+                            fontSize: 20.0,
+                            fontStyle: FontStyle.italic),
                       ),
                     ),
                     Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
-                        child: Text('Sizes Galaxy')),
+                        padding: EdgeInsetsDirectional.fromSTEB(120, 0, 0, 0),
+                        child: Text(
+                          'Food',
+                          style: new TextStyle(
+                              fontFamily: "Roboto",
+                              fontSize: 20.0,
+                              fontStyle: FontStyle.normal),
+                        )),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
+                      padding: EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
                       child: Text(
-                        widget.Size,
-                        style: FlutterFlowTheme.of(context).bodyText1.override(
-                              fontFamily: 'Poppins',
-                              fontWeight: FontWeight.bold,
-                            ),
+                        widget.Food,
+                        style: new TextStyle(
+                            fontFamily: "Roboto",
+                            fontSize: 20.0,
+                            fontStyle: FontStyle.italic),
                       ),
                     ),
                   ],
-                ),
-              ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(30, 0, 0, 0),
-                child: Text(
-                  'Details of the galaxy',
-                  style: FlutterFlowTheme.of(context).subtitle1.override(
-                        fontFamily: 'Poppins',
-                        color: Color.fromARGB(255, 0, 0, 0),
-                      ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: 100,
-                  decoration: BoxDecoration(
-                    color: Color.fromARGB(26, 0, 162, 255),
-                  ),
-                  child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(7, 10, 7, 7),
-                    child: Text(
-                      widget.Description,
-                      style: FlutterFlowTheme.of(context).bodyText1,
-                    ),
-                  ),
                 ),
               ),
             ],

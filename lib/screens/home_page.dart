@@ -1,6 +1,5 @@
 import 'package:camera/camera.dart';
 import 'package:cat_aplication/helpers/database_helper.dart';
-import 'package:cat_aplication/screens/contact.dart';
 import 'package:cat_aplication/screens/details_page.dart';
 import 'package:cat_aplication/screens/taken_picture_screen.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +27,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
-      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+      backgroundColor: Color.fromARGB(255, 255, 255, 255),
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
@@ -40,19 +39,21 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(30, 0, 0, 0),
+                    padding:
+                        const EdgeInsetsDirectional.fromSTEB(120, 10, 0, 0),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const Text(
-                          'Star Walk',
+                          'Cat Unite',
                           style: TextStyle(
                               fontSize: 30,
                               fontWeight: FontWeight.bold,
                               fontFamily: "Roboto"),
                         ),
                         const Text(
-                          'From Our universe',
+                          'An application for cats',
                           style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.w500,
@@ -61,32 +62,13 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                       ],
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(0, 10, 30, 5),
-                    child: FlutterFlowIconButton(
-                      borderColor: const Color.fromARGB(65, 0, 0, 0),
-                      borderRadius: 20,
-                      borderWidth: 2,
-                      buttonSize: 45,
-                      fillColor: const Color(0x003F2D1C),
-                      icon: const Icon(
-                        Icons.search_outlined,
-                        color: Color.fromARGB(135, 0, 0, 0),
-                        size: 25,
-                      ),
-                      onPressed: () {
-                        print('IconButton pressed ...');
-                      },
-                    ),
-                  ),
                 ],
               ),
-
               Expanded(
-                child: (FutureBuilder<List<Planet>>(
-                    future: DatabaseHelper.instance.getPlanets(),
+                child: (FutureBuilder<List<Cat>>(
+                    future: DatabaseHelper.instance.getCats(),
                     builder: (BuildContext context,
-                        AsyncSnapshot<List<Planet>> snapshot) {
+                        AsyncSnapshot<List<Cat>> snapshot) {
                       if (!snapshot.hasData) {
                         return Center(
                           child: Container(
@@ -98,7 +80,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                         return snapshot.data!.isEmpty
                             ? Center(
                                 child: Container(
-                                    child: const Text("No galaxies found!")),
+                                    child: const Text("No Cats found!")),
                               )
                             : ListView(
                                 scrollDirection: Axis.horizontal,
@@ -119,12 +101,10 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                 DetailsScreenWidget(
                                                   firstCamera:
                                                       widget.firstCamera,
-                                                  Description:
-                                                      planet.Description,
-                                                  Image: planet.Image,
                                                   Name: planet.Name,
-                                                  Size: planet.Size,
-                                                  Type: planet.Type,
+                                                  Image: planet.Image,
+                                                  Race: planet.Race,
+                                                  Food: planet.Food,
                                                 ));
                                         Navigator.push(context, route);
                                       });
@@ -134,9 +114,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                       }
                     })),
               ),
-
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(20, 10, 30, 20),
+                padding: EdgeInsetsDirectional.fromSTEB(20, 10, 30, 10),
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
                   children: [
@@ -161,19 +140,14 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                       ),
                     ),
                     Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(10, 0, 180, 0),
+                      padding: EdgeInsetsDirectional.fromSTEB(10, 0, 180, 0),
                       child: FFButtonWidget(
                         onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const MyApp()),
-                          );
+                          print('Button pressed ...');
                         },
                         text: '',
                         icon: FaIcon(
-                          FontAwesomeIcons.addressBook,
+                          FontAwesomeIcons.cat,
                           color: FlutterFlowTheme.of(context).primaryText,
                         ),
                         options: FFButtonOptions(
@@ -185,7 +159,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                     fontFamily: 'Poppins',
                                     color: Colors.white,
                                   ),
-                          borderSide: const BorderSide(
+                          borderSide: BorderSide(
                             color: Colors.transparent,
                             width: 1,
                           ),
@@ -204,20 +178,20 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                       },
                       text: '',
                       icon: Icon(
-                        Icons.arrow_forward_ios_outlined,
+                        Icons.note_add_outlined,
                         color: FlutterFlowTheme.of(context).primaryText,
-                        size: 11,
+                        size: 14,
                       ),
                       options: FFButtonOptions(
-                        width: 35,
-                        height: 35,
+                        width: 38,
+                        height: 38,
                         color: FlutterFlowTheme.of(context).secondaryBackground,
                         textStyle:
                             FlutterFlowTheme.of(context).subtitle2.override(
                                   fontFamily: 'Poppins',
                                   color: Colors.white,
                                 ),
-                        borderSide: const BorderSide(
+                        borderSide: BorderSide(
                           color: Colors.transparent,
                           width: 1,
                         ),
@@ -226,184 +200,6 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                   ],
                 ),
               ),
-
-              //new
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(100),
-                            child: Image.asset(
-                              'assets/images/galaxy_1.jpg',
-                              width: 92,
-                              height: 92,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          Text(
-                            'Atreus',
-                            style: FlutterFlowTheme.of(context).bodyText1,
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(100),
-                            child: Image.asset(
-                              'assets/images/galaxy_circle_3.png',
-                              width: 92,
-                              height: 92,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          Text(
-                            'Orion',
-                            style: FlutterFlowTheme.of(context).bodyText1,
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(100),
-                            child: Image.asset(
-                              'assets/images/galaxy_circle_2.png',
-                              width: 92,
-                              height: 92,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          Text(
-                            'VK-47 Flatline',
-                            style: FlutterFlowTheme.of(context).bodyText1,
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(100),
-                            child: Image.asset(
-                              'assets/images/galaxy_circle_1.png',
-                              width: 92,
-                              height: 92,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          Text(
-                            'Andromeda 01',
-                            style: FlutterFlowTheme.of(context).bodyText1,
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(100),
-                            child: Image.asset(
-                              'assets/images/galaxy_4.jpg',
-                              width: 92,
-                              height: 92,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          Text(
-                            'Nomde 89',
-                            style: FlutterFlowTheme.of(context).bodyText1,
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(100),
-                            child: Image.asset(
-                              'assets/images/galaxy_1.jpg',
-                              width: 92,
-                              height: 92,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          Text(
-                            'Celestia-I7',
-                            style: FlutterFlowTheme.of(context).bodyText1,
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(100),
-                            child: Image.asset(
-                              'assets/images/galaxy_2.jpg',
-                              width: 92,
-                              height: 92,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          Text(
-                            'Keptir 56',
-                            style: FlutterFlowTheme.of(context).bodyText1,
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(100),
-                            child: Image.asset(
-                              'assets/images/galaxy_3.jpg',
-                              width: 92,
-                              height: 92,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          Text(
-                            'Hal0 U67',
-                            style: FlutterFlowTheme.of(context).bodyText1,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              )
             ],
           ),
         ),
